@@ -1,5 +1,12 @@
 #include "main.h"
-
+/**
+ *  Custom printf function that mimics basic functionality of the standard printf.
+ *
+ *  Supported format specifiers: %c (character), %s (string), %d/%i (integer).
+ *  @param format The format string containing format specifiers.
+ *  @param ... Variable number of arguments corresponding to the format specifiers.
+ *  @return The number of characters written to stdout, or -1 if an error occurs.
+ */
 int _printf(const char *format, ...)
 {
 	int printed_chars = 0;
@@ -13,31 +20,25 @@ int _printf(const char *format, ...)
 		if (*format != '%')
 			write(1, format++, 1);
 		else
-		{
 			format++;
 			if (*format == '\0')
 				break;
 			if (*format == '%')
 				write(1, format++, 1);
 			else if (*format == 'c')
-			{
 				printed_chars++;
 				write(1, &va_arg(arg_list, int), 1);
-			}
 			else if (*format == 's')
-			{
-				char *str = va_arg(arg_list, char *);
+				char *str = va_arg(arg_list, char*)
+					;
 				for (; *str; str++, printed_chars++)
 					write(1, str, 1);
-			}
 			else if (*format == 'd' || *format == 'i')
-			{
 				char num_str[12];
 				int num_len = sprintf(num_str, "%d", va_arg(arg_list, int));
-				printed_chars +=  num_len;
+
+				printed_chars  += num_len;
 				write(1, num_str, num_len);
-			}
-		}
 		format++;
 	}
 	va_end(arg_list);
