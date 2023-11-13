@@ -6,8 +6,9 @@ int _printf(const char *format, ...)
 	va_list arg_list;
 
 	if (format == NULL)
+	{
 		return (-1);
-
+	}
 	va_start(arg_list, format);
 	while (*format)
 	{
@@ -19,7 +20,7 @@ int _printf(const char *format, ...)
 		else
 		{
 			format++;
-			if (format == '\0')
+			if (*format == '\0')
 			{
 				break;
 			}
@@ -31,23 +32,32 @@ int _printf(const char *format, ...)
 			else if (*format == 'c')
 			{
 				char c = va_arg(arg_list, int);
-				write (1, &c, 1);
+				write(1, &c, 1);
 				printed_chars++;
 			}
 			else if (*format == 's')
 			{
-				char *str = va_arg(arg_list, char*);
+				char *str = va_arg(arg_list, char *);
 				int str_len = 0;
-				while (str [str_len] != '\0'){
+				while (str[str_len] != '\0')
+				{
 					str_len++;
 				}
 				write(1, str, str_len);
 				printed_chars += str_len;
 			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				int num = va_arg(arg_list, int);
+				char num_str[12];
+				int num_len = sprintf(num_str, "%d", num);
+				write(1, num_str, num_len);
+				printed_chars += num_len;
+			}
 		}
-		format++;        
+		format++;
 	}
 	va_end(arg_list);
+
 	return printed_chars;
 }
-
