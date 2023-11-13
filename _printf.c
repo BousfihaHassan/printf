@@ -20,7 +20,10 @@ int _printf(const char *format, ...)
 			if (*format == '%')
 				write(1, format++, 1);
 			else if (*format == 'c')
-				printed_chars++, write(1, &va_arg(arg_list, int), 1);
+			{
+				printed_chars++;
+				write(1, &va_arg(arg_list, int), 1);
+			}
 			else if (*format == 's')
 			{
 				char *str = va_arg(arg_list, char *);
@@ -31,13 +34,13 @@ int _printf(const char *format, ...)
 			{
 				char num_str[12];
 				int num_len = sprintf(num_str, "%d", va_arg(arg_list, int));
-			       	printed_chars += num_len;
+				printed_chars +=  num_len;
 				write(1, num_str, num_len);
 			}
 		}
 		format++;
 	}
 	va_end(arg_list);
-       	return printed_chars;
+	return (printed_chars);
 }
 
