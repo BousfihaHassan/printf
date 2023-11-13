@@ -1,5 +1,10 @@
 #include "main.h"
-
+/**
+ * _printf - Custom printf function.
+ * @format: Format string with specifiers (%c, %s, %d/%i).
+ *
+ * Return: Number of characters written to stdout, or -1 on error.
+ */
 int _printf(const char *format, ...)
 {
 	int printed_chars = 0;
